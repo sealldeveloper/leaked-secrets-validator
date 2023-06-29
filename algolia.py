@@ -14,7 +14,22 @@ parser.add_argument('--action','-a',
                     dest='action',choices=['permissions','xss'], required=True)
 args = parser.parse_args()
 print(f'Using {args.apikey} with ID {args.appid}...')
-if args.action == 'permissions':
+if args.action == 'listindices':
+    from algoliasearch.search_client import SearchClient
+    client = SearchClient.create(args.appid,args.apikey)
+    indices=client.list_indices()
+    print(indices)
+elif args.action == 'getsettings':
+    if not args.index:
+        print('You must proivde an index (--index)!')
+        exit()
+    from algoliasearch.search_client import SearchClient
+    # Use an API key with `listIndexes` ACL
+    client = SearchClient.create(args.appid, args.apikey)
+    index = client.init_index(args.index)
+    settings = index.get_settings()
+    print(settings)
+elif args.action == 'permissions':
     from algoliasearch.search_client import SearchClient
     # Use an API key with `listIndexes` ACL
     client = SearchClient.create(args.appid, args.apikey)
