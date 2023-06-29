@@ -11,7 +11,7 @@ parser.add_argument('--index','-i',
 parser.add_argument('--xsspayload','-x',
                     dest='xsspayload')
 parser.add_argument('--action','-a',
-                    dest='action',choices=['permissions','xss'], required=True)
+                    dest='action',choices=['permissions','xss','listindices','getsettings'], required=True)
 args = parser.parse_args()
 print(f'Using {args.apikey} with ID {args.appid}...')
 if args.action == 'listindices':
